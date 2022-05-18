@@ -23,6 +23,9 @@
   font-weight: bold;
   color: #8a2b06;
 }
+.input-invalid {
+  border-color: red;
+}
 
 .amount {
   font-weight: bold;
