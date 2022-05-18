@@ -16,21 +16,7 @@ const Checkout = (props) => {
   const streetInputRef = useRef();
   const postalCodeInputRef = useRef();
   const cityInputRef = useRef();
-  const sendData = async (userData) => {
-    const sendingData = await fetch(
-      "https://logical-honor-328116-default-rtdb.firebaseio.com/Meals/Order.json",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application.json",
-        },
-        body: JSON.stringify({
-          user: userData,
-          orderedItems: cartCtx.item,
-        }),
-      }
-    );
-  };
+
   const confirmHandler = (event) => {
     event.preventDefault();
     const enteredName = nameInputRef.current.value;
@@ -62,7 +48,7 @@ const Checkout = (props) => {
         Street: enteredStreet,
         postalCode: enteredPostalCode,
       };
-      sendData(userData);
+      props.onConfirm(userData);
     }
   };
   const style = (property) => {
@@ -71,7 +57,6 @@ const Checkout = (props) => {
       : classes.control + " " + classes.invalid;
     return classN;
   };
-
   return (
     <form className={classes.form} onSubmit={confirmHandler}>
       <div className={style(formInputValidity.name)}>
