@@ -17,18 +17,6 @@ const Checkout = (props) => {
   const postalCodeInputRef = useRef();
   const cityInputRef = useRef();
   const sendData = async (userData) => {
-    const OrderData = [];
-    const data = [];
-    cartCtx.item.map((item) => {
-      data.push({
-        key: item.id,
-        name: item.name,
-        amount: item.amount,
-        price: item.price,
-      });
-    });
-    OrderData.push(userData);
-    OrderData.push(data);
     const sendingData = await fetch(
       "https://logical-honor-328116-default-rtdb.firebaseio.com/Meals/Order.json",
       {
@@ -36,7 +24,10 @@ const Checkout = (props) => {
         headers: {
           "Content-Type": "application.json",
         },
-        body: JSON.stringify(OrderData),
+        body: JSON.stringify({
+          user: userData,
+          orderedItems: cartCtx.item,
+        }),
       }
     );
   };
